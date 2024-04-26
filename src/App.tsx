@@ -17,6 +17,10 @@ import { AddQueue } from "./pages/AddQueue"
 import { AddTasks } from "./pages/AddTasks"
 
 function App() {
+  const prefersDarkMode =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/">
@@ -33,7 +37,10 @@ function App() {
   )
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider
+      defaultTheme={prefersDarkMode ? "dark" : "light"}
+      storageKey="vite-ui-theme"
+    >
       <RouterProvider router={router} />
       <Toaster />
     </ThemeProvider>
