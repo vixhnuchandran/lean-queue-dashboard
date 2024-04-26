@@ -41,7 +41,7 @@ const Header: React.FC<headerProps> = ({ activeLink }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
-            <img src="/sb.svg" className="h-5 w-5" />
+            <img src="/sb.svg" className="h-8 w-8" />
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
