@@ -191,9 +191,9 @@ export function Queues() {
       </div>
       <div className="flex flex-col">
         <Header activeLink="/queues" />
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+        <main className="flex flex-1  flex-col gap-4 p-4 md:gap-8 md:p-8">
           <div className="w-full ">
-            <div className="flex items-center lg:space-x-0 space-x-4 py-4 w- justify-between">
+            <div className="flex items-center lg:space-x-0 space-x-4 pb-4 w- justify-between">
               <Input
                 placeholder="Search..."
                 value={

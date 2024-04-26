@@ -1,12 +1,6 @@
 import SideNavBar from "../components/SideNavBar"
 import Header from "@/components/Header"
-import {
-  Server,
-  ServerCog,
-  PcCase,
-  BetweenHorizontalStart,
-  PlusCircleIcon,
-} from "lucide-react"
+import { Server, ServerCog, PcCase } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -16,16 +10,7 @@ import {
 } from "@/components/ui/select"
 
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 export function Settings() {
