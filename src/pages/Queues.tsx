@@ -1,5 +1,5 @@
 "use client"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import * as React from "react"
 import {
   ColumnDef,
@@ -126,7 +126,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -138,7 +138,12 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Add tasks</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to={`/queues/${row.getValue("id")}`}>View details</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to={`/queues/${row.getValue("id")}/add`}>Add tasks </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
             <DropdownMenuItem>Export</DropdownMenuItem>
           </DropdownMenuContent>
@@ -152,12 +157,6 @@ import SideNavBar from "../components/SideNavBar"
 import Header from "@/components/Header"
 
 export function Queues() {
-  const navigate = useNavigate()
-
-  const handleRowClick = (rowId: string | number) => {
-    navigate(`/queues/${rowId}`)
-  }
-
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -206,9 +205,11 @@ export function Queues() {
                 className="max-w-sm"
               />
               <div className=" flex space-x-2 first-letter:justify-center items-center">
-                <Button variant={"outline"} className="space-x-2">
-                  <PlusCircleIcon size={20} /> <span>Add queue </span>
-                </Button>
+                <Link to={`/queues/create`}>
+                  <Button variant={"outline"} className="space-x-2">
+                    <PlusCircleIcon size={18} /> <span>Add queue </span>
+                  </Button>
+                </Link>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild className=" ">
                     <Button variant="outline" className="ml-auto">
@@ -263,7 +264,6 @@ export function Queues() {
                       <TableRow
                         key={row.id}
                         data-state={row.getIsSelected() && "selected"}
-                        onClick={() => handleRowClick(row.getValue("id"))}
                       >
                         {row.getVisibleCells().map(cell => (
                           <TableCell key={cell.id}>

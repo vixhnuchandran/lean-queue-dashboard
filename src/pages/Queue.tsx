@@ -24,12 +24,12 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MoreVertical } from "lucide-react"
+import { MoreVertical, ListPlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useParams } from "react-router-dom"
 import { Payment, QData, Tasks } from "@/data/queuesData"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import * as React from "react"
 import {
   ColumnDef,
@@ -43,96 +43,111 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import {
+  ArrowUpDown,
+  ChevronDown,
+  MoreHorizontal,
+  TrashIcon,
+} from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import SideNavBar from "../components/SideNavBar"
 import Header from "@/components/Header"
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 // eslint-disable-next-line react-refresh/only-export-components
-export const columns: ColumnDef<Tasks>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={value => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "taskId",
-    header: ({ column }) => {
-      return (
-        <Link
-          to="#"
-          className=""
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          <div className="flex items-center">
-            <span>Id</span>
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </div>
-        </Link>
-      )
-    },
-    cell: ({ row }) => (
-      <div className="lowercase ">{row.getValue("taskId")}</div>
-    ),
-  },
 
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: () => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Add tasks</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-            <DropdownMenuItem>Export</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
 export function Queue() {
   const { id } = useParams()
-  const navigate = useNavigate()
 
-  const handleRowClick = (taskId: string | number) => {
-    navigate(`/queues/${id}/${taskId}`.toLowerCase())
-  }
+  const columns: ColumnDef<Tasks>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={value => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "taskId",
+      header: ({ column }) => {
+        return (
+          <Link
+            to="#"
+            className=""
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <div className="flex items-center">
+              <span>Id</span>
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </div>
+          </Link>
+        )
+      },
+      cell: ({ row }) => (
+        <div className="lowercase ">{row.getValue("taskId")}</div>
+      ),
+    },
+
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("status")}</div>
+      ),
+    },
+
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const data: string = row.getValue("taskId")
+        const taskId = data.toLowerCase()
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link to={`/queues/${id}/${taskId}`}>
+                <DropdownMenuItem>View details</DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem>Delete</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    },
+  ]
 
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -207,6 +222,34 @@ export function Queue() {
                     </div>
 
                     <div className="ml-auto flex items-center gap-1">
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            className="h-8 w-8"
+                          >
+                            <TrashIcon className="h-3.5 w-3.5 text-red-500" />
+                            <span className="sr-only">More</span>
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete this queue and remove all
+                              related tasks.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction>Confirm</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
@@ -220,9 +263,9 @@ export function Queue() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Add tasks</DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <Link to={`/queues/${id}/add`}>
+                            <DropdownMenuItem>Add tasks</DropdownMenuItem>
+                          </Link>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
@@ -332,6 +375,7 @@ export function Queue() {
                 <p>No data available</p>
               )}
             </TabsContent>
+
             <TabsContent value="tasks">
               <div className="w-full">
                 <div className="flex items-center justify-between space-x-4 lg:space-x-4 py-4">
@@ -348,32 +392,41 @@ export function Queue() {
                     }
                     className="max-w-sm"
                   />
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild className=" ">
-                      <Button variant="outline" className="ml-auto">
-                        Show <ChevronDown className="ml-2 h-4 w-4" />
+                  <div className="flex items-center space-x-4">
+                    <Link to={`/queues/${id}/add`}>
+                      <Button variant={"outline"}>
+                        <div className="flex items-center space-x-2">
+                          <ListPlusIcon size={18} /> <span>Add Tasks</span>{" "}
+                        </div>
                       </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      {table
-                        .getAllColumns()
-                        .filter(column => column.getCanHide())
-                        .map(column => {
-                          return (
-                            <DropdownMenuCheckboxItem
-                              key={column.id}
-                              className="capitalize"
-                              checked={column.getIsVisible()}
-                              onCheckedChange={value =>
-                                column.toggleVisibility(!!value)
-                              }
-                            >
-                              {column.id}
-                            </DropdownMenuCheckboxItem>
-                          )
-                        })}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                    </Link>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild className=" ">
+                        <Button variant="outline" className="ml-auto">
+                          Show <ChevronDown className="ml-2 h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        {table
+                          .getAllColumns()
+                          .filter(column => column.getCanHide())
+                          .map(column => {
+                            return (
+                              <DropdownMenuCheckboxItem
+                                key={column.id}
+                                className="capitalize"
+                                checked={column.getIsVisible()}
+                                onCheckedChange={value =>
+                                  column.toggleVisibility(!!value)
+                                }
+                              >
+                                {column.id}
+                              </DropdownMenuCheckboxItem>
+                            )
+                          })}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
                 <div className="rounded-md border">
                   <Table>
@@ -401,9 +454,6 @@ export function Queue() {
                           <TableRow
                             key={row.id}
                             data-state={row.getIsSelected() && "selected"}
-                            onClick={() =>
-                              handleRowClick(row.getValue("taskId"))
-                            }
                           >
                             {row.getVisibleCells().map(cell => (
                               <TableCell key={cell.id}>

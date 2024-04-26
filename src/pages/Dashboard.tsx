@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import {
   Table,
   TableBody,
@@ -79,16 +73,14 @@ export function Dashboard() {
                 </CardTitle>
                 <CircleAlertIcon
                   size={30}
-                  className="text-orange-400 text-muted-foreground"
+                  className="text-orange-500 text-muted-foreground"
                 />
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">
                   23456 {/*  pending tasks cunt goes here*/}
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  40.1% in total
-                </p>
+                <p className="text-xs text-muted-foreground">40.1% in total</p>
               </CardContent>
             </Card>
             <Card x-chunk="dashboard-01-chunk-1">
@@ -96,10 +88,7 @@ export function Dashboard() {
                 <CardTitle className="text-sm font-medium">
                   Added Tasks
                 </CardTitle>
-                <ListPlusIcon
-                  size={30}
-                  className="text-indigo-400 text-muted-foreground"
-                />
+                <ListPlusIcon size={30} className="text-indigo-500  " />
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">
@@ -115,10 +104,7 @@ export function Dashboard() {
                 <CardTitle className="text-sm font-medium">
                   Success Tasks
                 </CardTitle>
-                <CircleCheckIcon
-                  size={30}
-                  className="text-green-400 text-muted-foreground"
-                />
+                <CircleCheckIcon size={30} className="text-green-500 " />
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">
@@ -132,10 +118,7 @@ export function Dashboard() {
                 <CardTitle className="text-sm font-medium">
                   Error Tasks
                 </CardTitle>
-                <CircleXIcon
-                  size={30}
-                  className="text-red-400 text-muted-foreground"
-                />
+                <CircleXIcon size={30} className="text-red-500 " />
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">
@@ -150,7 +133,6 @@ export function Dashboard() {
               <CardHeader className="flex flex-row items-center">
                 <div className="grid gap-2">
                   <CardTitle>Recent Queues</CardTitle>
-                  <CardDescription>Recent completed queues.</CardDescription>
                 </div>
               </CardHeader>
               <CardContent>
@@ -175,7 +157,7 @@ export function Dashboard() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {QData.slice(-7).map(item => (
+                    {QData.slice(-8).map(item => (
                       <TableRow onClick={() => handleRowClick(item.id)}>
                         <TableCell>
                           <div className=" text-left font-medium">

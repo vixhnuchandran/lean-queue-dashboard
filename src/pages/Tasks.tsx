@@ -13,6 +13,21 @@ import { QData, Tasks } from "@/data/queuesData"
 import SideNavBar from "../components/SideNavBar"
 import Header from "@/components/Header"
 import { getRandomDate } from "@/utils/randDateGen"
+import { Badge } from "@/components/ui/badge"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { TrashIcon } from "lucide-react"
+
 export function Task() {
   const { id, taskid } = useParams()
   const dataQ: Tasks[] = QData.filter(item => item.id === id)[0].tasks
@@ -36,6 +51,49 @@ export function Task() {
                     {dataT.taskId}
                   </CardTitle>
                   <CardDescription>Id: {dataT.taskId} </CardDescription>
+                  {dataT.status && (
+                    <Badge
+                      variant="outline"
+                      className={`mt-2 ${
+                        dataT.status === "completed"
+                          ? "bg-green-100 text-green-500"
+                          : dataT.status === "processing"
+                          ? "bg-orange-100 text-orange-500"
+                          : dataT.status === "error"
+                          ? "bg-red-100 text-red-500"
+                          : "bg-indigo-100 text-indigo-500"
+                      }`}
+                    >
+                      {dataT.status.charAt(0).toUpperCase() +
+                        dataT.status.slice(1)}
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="ml-auto flex items-center gap-1">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button size="icon" variant="outline" className="h-8 w-8">
+                        <TrashIcon className="h-3.5 w-3.5 text-red-500" />
+                        <span className="sr-only">More</span>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete this task.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Confirm</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </CardHeader>
 
