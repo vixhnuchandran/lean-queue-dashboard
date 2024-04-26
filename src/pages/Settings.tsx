@@ -23,7 +23,7 @@ export function Settings() {
         <Header activeLink="/settings" />
 
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3 md:p-8">
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
+          <div className="relative  flex-col items-start gap-8 md:flex">
             <form className="grid w-full h-screen items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <div className="grid gap-3 ">
