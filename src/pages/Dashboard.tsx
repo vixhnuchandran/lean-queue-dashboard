@@ -66,7 +66,7 @@ export function Dashboard() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-            <Card x-chunk="dashboard-01-chunk-0">
+            <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Pending Tasks
@@ -83,7 +83,7 @@ export function Dashboard() {
                 <p className="text-xs text-muted-foreground">40.1% in total</p>
               </CardContent>
             </Card>
-            <Card x-chunk="dashboard-01-chunk-1">
+            <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Added Tasks
@@ -113,7 +113,7 @@ export function Dashboard() {
                 <p className="text-xs text-muted-foreground">96% in total</p>
               </CardContent>
             </Card>
-            <Card x-chunk="dashboard-01-chunk-3">
+            <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Error Tasks
